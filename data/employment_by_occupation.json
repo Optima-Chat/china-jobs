@@ -1,0 +1,452 @@
+{
+  "source": "第七次全国人口普查（2020年）表4-6 各地区分性别、职业中类的就业人口",
+  "note": "数据为10%长表抽样，employment_estimated 为 ×10 估算的全国总数",
+  "total_employment_sample": 65631786,
+  "total_employment_estimated": 656317860,
+  "categories": [
+    {
+      "major_category": "党的机关、国家机关、群众团体和社会组织、企事业单位负责人",
+      "middle_category": "中国共产党机关负责人",
+      "employment_sample": 4561,
+      "employment_estimated": 45610
+    },
+    {
+      "major_category": "党的机关、国家机关、群众团体和社会组织、企事业单位负责人",
+      "middle_category": "国家机关负责人",
+      "employment_sample": 64393,
+      "employment_estimated": 643930
+    },
+    {
+      "major_category": "党的机关、国家机关、群众团体和社会组织、企事业单位负责人",
+      "middle_category": "民主党派和工商联负责人",
+      "employment_sample": 231,
+      "employment_estimated": 2310
+    },
+    {
+      "major_category": "党的机关、国家机关、群众团体和社会组织、企事业单位负责人",
+      "middle_category": "人民团体和群众团体、社会组织及其他成员组织负责人",
+      "employment_sample": 49830,
+      "employment_estimated": 498300
+    },
+    {
+      "major_category": "党的机关、国家机关、群众团体和社会组织、企事业单位负责人",
+      "middle_category": "基层群众自治组织负责人",
+      "employment_sample": 45455,
+      "employment_estimated": 454550
+    },
+    {
+      "major_category": "党的机关、国家机关、群众团体和社会组织、企事业单位负责人",
+      "middle_category": "企事业单位负责人",
+      "employment_sample": 1283443,
+      "employment_estimated": 12834430
+    },
+    {
+      "major_category": "专业技术人员",
+      "middle_category": "科学研究人员",
+      "employment_sample": 45735,
+      "employment_estimated": 457350
+    },
+    {
+      "major_category": "专业技术人员",
+      "middle_category": "工程技术人员",
+      "employment_sample": 1544606,
+      "employment_estimated": 15446060
+    },
+    {
+      "major_category": "专业技术人员",
+      "middle_category": "农业技术人员",
+      "employment_sample": 50597,
+      "employment_estimated": 505970
+    },
+    {
+      "major_category": "专业技术人员",
+      "middle_category": "飞机和船舶技术人员",
+      "employment_sample": 11505,
+      "employment_estimated": 115050
+    },
+    {
+      "major_category": "专业技术人员",
+      "middle_category": "卫生专业技术人员",
+      "employment_sample": 1091733,
+      "employment_estimated": 10917330
+    },
+    {
+      "major_category": "专业技术人员",
+      "middle_category": "经济和金融专业人员",
+      "employment_sample": 1445459,
+      "employment_estimated": 14454590
+    },
+    {
+      "major_category": "专业技术人员",
+      "middle_category": "法律、社会和宗教专业人员",
+      "employment_sample": 160315,
+      "employment_estimated": 1603150
+    },
+    {
+      "major_category": "专业技术人员",
+      "middle_category": "教学人员",
+      "employment_sample": 2217346,
+      "employment_estimated": 22173460
+    },
+    {
+      "major_category": "专业技术人员",
+      "middle_category": "文学艺术、体育专业人员",
+      "employment_sample": 117905,
+      "employment_estimated": 1179050
+    },
+    {
+      "major_category": "专业技术人员",
+      "middle_category": "新闻出版、文化专业人员",
+      "employment_sample": 114330,
+      "employment_estimated": 1143300
+    },
+    {
+      "major_category": "专业技术人员",
+      "middle_category": "其他专业技术人员",
+      "employment_sample": 40810,
+      "employment_estimated": 408100
+    },
+    {
+      "major_category": "办事人员和有关人员",
+      "middle_category": "办事人员",
+      "employment_sample": 3688150,
+      "employment_estimated": 36881500
+    },
+    {
+      "major_category": "办事人员和有关人员",
+      "middle_category": "安全和消防人员",
+      "employment_sample": 816435,
+      "employment_estimated": 8164350
+    },
+    {
+      "major_category": "办事人员和有关人员",
+      "middle_category": "其他办事人员和有关人员",
+      "employment_sample": 54395,
+      "employment_estimated": 543950
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "批发与零售服务人员",
+      "employment_sample": 9254441,
+      "employment_estimated": 92544410
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "交通运输、仓储和邮政业服务人员",
+      "employment_sample": 3972750,
+      "employment_estimated": 39727500
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "住宿和餐饮服务人员",
+      "employment_sample": 2998199,
+      "employment_estimated": 29981990
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "信息传输、软件和信息技术服务人员",
+      "employment_sample": 548527,
+      "employment_estimated": 5485270
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "金融服务人员",
+      "employment_sample": 488698,
+      "employment_estimated": 4886980
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "房地产服务人员",
+      "employment_sample": 395197,
+      "employment_estimated": 3951970
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "租赁和商务服务人员",
+      "employment_sample": 606964,
+      "employment_estimated": 6069640
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "技术辅助服务人员",
+      "employment_sample": 491973,
+      "employment_estimated": 4919730
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "水利、环境和公共设施管理服务人员",
+      "employment_sample": 1073628,
+      "employment_estimated": 10736280
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "居民服务人员",
+      "employment_sample": 1299714,
+      "employment_estimated": 12997140
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "电力、燃气及水供应服务人员",
+      "employment_sample": 202698,
+      "employment_estimated": 2026980
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "修理及制作服务人员",
+      "employment_sample": 678456,
+      "employment_estimated": 6784560
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "文化、体育和娱乐服务人员",
+      "employment_sample": 143599,
+      "employment_estimated": 1435990
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "健康服务人员",
+      "employment_sample": 47952,
+      "employment_estimated": 479520
+    },
+    {
+      "major_category": "社会生产服务和生活服务人员",
+      "middle_category": "其他社会生产和生活服务人员",
+      "employment_sample": 26235,
+      "employment_estimated": 262350
+    },
+    {
+      "major_category": "农、林、牧、渔业生产及辅助人员",
+      "middle_category": "农业生产人员",
+      "employment_sample": 11842702,
+      "employment_estimated": 118427020
+    },
+    {
+      "major_category": "农、林、牧、渔业生产及辅助人员",
+      "middle_category": "林业生产人员",
+      "employment_sample": 215169,
+      "employment_estimated": 2151690
+    },
+    {
+      "major_category": "农、林、牧、渔业生产及辅助人员",
+      "middle_category": "畜牧业生产人员",
+      "employment_sample": 1036607,
+      "employment_estimated": 10366070
+    },
+    {
+      "major_category": "农、林、牧、渔业生产及辅助人员",
+      "middle_category": "渔业生产人员",
+      "employment_sample": 246061,
+      "employment_estimated": 2460610
+    },
+    {
+      "major_category": "农、林、牧、渔业生产及辅助人员",
+      "middle_category": "农林牧渔生产辅助人员",
+      "employment_sample": 122166,
+      "employment_estimated": 1221660
+    },
+    {
+      "major_category": "农、林、牧、渔业生产及辅助人员",
+      "middle_category": "其他农、林、牧、渔业生产加工人员",
+      "employment_sample": 8713,
+      "employment_estimated": 87130
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "农副产品加工人员",
+      "employment_sample": 256365,
+      "employment_estimated": 2563650
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "食品、饮料生产加工人员",
+      "employment_sample": 289544,
+      "employment_estimated": 2895440
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "烟草及其制品加工人员",
+      "employment_sample": 13596,
+      "employment_estimated": 135960
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "纺织、针织、印染人员",
+      "employment_sample": 297335,
+      "employment_estimated": 2973350
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "纺织品、服装和皮革、毛皮制品加工制作人员",
+      "employment_sample": 1597359,
+      "employment_estimated": 15973590
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "木材加工、家具与木制品制作人员",
+      "employment_sample": 588565,
+      "employment_estimated": 5885650
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "纸及纸制品生产加工人员",
+      "employment_sample": 104006,
+      "employment_estimated": 1040060
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "印刷和记录媒介复制人员",
+      "employment_sample": 95768,
+      "employment_estimated": 957680
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "文教、工美、体育和娱乐用品制造人员",
+      "employment_sample": 268756,
+      "employment_estimated": 2687560
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "石油加工和炼焦、煤化工生产人员",
+      "employment_sample": 36075,
+      "employment_estimated": 360750
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "化学原料和化学制品制造人员",
+      "employment_sample": 156664,
+      "employment_estimated": 1566640
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "医药制造人员",
+      "employment_sample": 70358,
+      "employment_estimated": 703580
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "化学纤维制造人员",
+      "employment_sample": 16589,
+      "employment_estimated": 165890
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "橡胶和塑料制品制造人员",
+      "employment_sample": 288578,
+      "employment_estimated": 2885780
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "非金属矿物制品制造人员",
+      "employment_sample": 329179,
+      "employment_estimated": 3291790
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "采矿人员",
+      "employment_sample": 292690,
+      "employment_estimated": 2926900
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "金属冶炼和压延加工人员",
+      "employment_sample": 196736,
+      "employment_estimated": 1967360
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "机械制造基础加工人员",
+      "employment_sample": 806516,
+      "employment_estimated": 8065160
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "金属制品制造人员",
+      "employment_sample": 471400,
+      "employment_estimated": 4714000
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "通用设备制造人员",
+      "employment_sample": 167829,
+      "employment_estimated": 1678290
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "专用设备制造人员",
+      "employment_sample": 65159,
+      "employment_estimated": 651590
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "汽车制造人员",
+      "employment_sample": 232533,
+      "employment_estimated": 2325330
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "铁路、船舶、航空设备制造人员",
+      "employment_sample": 55026,
+      "employment_estimated": 550260
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "电气机械和器材制造人员",
+      "employment_sample": 240902,
+      "employment_estimated": 2409020
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "计算机、通信和其他电子设备制造人员",
+      "employment_sample": 1231417,
+      "employment_estimated": 12314170
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "仪器仪表制造人员",
+      "employment_sample": 21754,
+      "employment_estimated": 217540
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "废弃资源综合利用人员",
+      "employment_sample": 25944,
+      "employment_estimated": 259440
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "电力、热力、气体、水生产和输配人员",
+      "employment_sample": 93963,
+      "employment_estimated": 939630
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "建筑施工人员",
+      "employment_sample": 6250935,
+      "employment_estimated": 62509350
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "运输设备和通用工程机械操作人员及有关人员",
+      "employment_sample": 437155,
+      "employment_estimated": 4371550
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "生产辅助人员",
+      "employment_sample": 1861717,
+      "employment_estimated": 18617170
+    },
+    {
+      "major_category": "生产制造及有关人员",
+      "middle_category": "其他生产制造及有关人员",
+      "employment_sample": 66071,
+      "employment_estimated": 660710
+    },
+    {
+      "major_category": "不便分类的其他从业人员",
+      "middle_category": "不便分类的其他从业人员",
+      "employment_sample": 157619,
+      "employment_estimated": 1576190
+    }
+  ]
+}
