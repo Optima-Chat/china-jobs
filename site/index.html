@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 对中国工作岗位的替代分析</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #0a0a0a; color: #e0e0e0; }
+#header { padding: 20px 30px; background: #111; border-bottom: 1px solid #222; }
+#header h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+#header p { font-size: 13px; color: #888; }
+#controls { display: flex; gap: 12px; align-items: center; padding: 12px 30px; background: #111; border-bottom: 1px solid #222; flex-wrap: wrap; }
+#controls label { font-size: 13px; color: #aaa; }
+#controls select, #controls input { background: #1a1a1a; border: 1px solid #333; color: #e0e0e0; padding: 6px 10px; border-radius: 4px; font-size: 13px; }
+#controls input[type="text"] { width: 200px; }
+#stats { margin-left: auto; font-size: 13px; color: #888; }
+#treemap { width: 100%; height: calc(100vh - 130px); }
+#tooltip { position: fixed; background: rgba(0,0,0,0.92); border: 1px solid #444; border-radius: 6px; padding: 12px 16px; font-size: 13px; pointer-events: none; display: none; z-index: 100; max-width: 350px; line-height: 1.6; }
+#tooltip .name { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+#tooltip .score { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+#tooltip .cat { color: #888; font-size: 12px; }
+#tooltip .emp { color: #aaa; margin-top: 4px; }
+#legend { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.85); border: 1px solid #333; border-radius: 6px; padding: 12px 16px; font-size: 12px; z-index: 50; }
+#legend .title { font-weight: 600; margin-bottom: 8px; font-size: 13px; }
+#legend .bar { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+#legend .swatch { width: 16px; height: 12px; border-radius: 2px; }
+</style>
+</head>
+<body>
+<div id="header">
+  <h1>AI 对中国 1639 个工作岗位的替代可能性分析</h1>
+  <p>数据来源：职业分类大典（2022）| 就业人数：第七次全国人口普查（2020）| 灵感：<a href="https://github.com/karpathy/jobs" style="color:#6af">karpathy/jobs</a></p>
+</div>
+<div id="controls">
+  <label>分类层级：</label>
+  <select id="level">
+    <option value="major">大类（8类）</option>
+    <option value="middle" selected>中类（79类）</option>
+    <option value="occupation">细类（1639个职业）</option>
+  </select>
+  <label>搜索：</label>
+  <input type="text" id="search" placeholder="输入职业名称...">
+  <div id="stats"></div>
+</div>
+<div id="treemap"></div>
+<div id="tooltip"></div>
+<div id="legend">
+  <div class="title">AI 替代可能性</div>
+  <div class="bar"><div class="swatch" style="background:#1a9641"></div> 0-1 极低</div>
+  <div class="bar"><div class="swatch" style="background:#6ab03a"></div> 2-3 低</div>
+  <div class="bar"><div class="swatch" style="background:#c5c228"></div> 4-5 中等</div>
+  <div class="bar"><div class="swatch" style="background:#e67e22"></div> 6-7 较高</div>
+  <div class="bar"><div class="swatch" style="background:#d73027"></div> 8-9 极高</div>
+  <div class="bar"><div class="swatch" style="background:#7b0000"></div> 10 确定替代</div>
+</div>
+
+<script>
+const scoreColor = d3.scaleLinear()
+  .domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+  .range(["#1a6633","#1a9641","#4daf4a","#6ab03a","#b5c228","#c5c228","#e6a51e","#e67e22","#d94b2a","#d73027","#7b0000"]);
+
+const textColor = s => s >= 4 && s <= 6 ? "#111" : "#fff";
+
+let allData, scores, employment, occupations;
+
+async function loadData() {
+  const [scoresData, empData, occData] = await Promise.all([
+    d3.json("data/scores.json"),
+    d3.json("data/employment_by_occupation.json"),
+    d3.json("data/occupations_raw.json"),
+  ]);
+  scores = {};
+  scoresData.scores.forEach(s => scores[s.code] = s);
+  employment = {};
+  empData.categories.forEach(c => employment[c.middle_category] = c.employment_estimated);
+  occupations = occData;
+  allData = { scores: scoresData, employment: empData, occupations: occData };
+
+  updateStats(scoresData);
+  render();
+}
+
+function updateStats(scoresData) {
+  const avg = scoresData.metadata.average_score;
+  const high = scoresData.scores.filter(s => s.score >= 7).length;
+  const pct = Math.round(high / scoresData.scores.length * 100);
+  document.getElementById("stats").textContent =
+    `平均分: ${avg}/10 | ${pct}% 岗位评分 ≥7 (${high}/${scoresData.scores.length})`;
+}
+
+function getEmployment(middleCode) {
+  // Map our middle codes to census middle category names
+  const middleName = occupations.middle_categories[middleCode] || "";
+  // Try to match by name
+  for (const cat of allData.employment.categories) {
+    if (cat.middle_category === middleName || middleName.includes(cat.middle_category)) {
+      return cat.employment_estimated;
+    }
+  }
+  // Fallback: distribute major category employment evenly
+  return null;
+}
+
+function buildHierarchy(level) {
+  const search = document.getElementById("search").value.toLowerCase();
+
+  if (level === "major") {
+    const children = [];
+    for (const [code, name] of Object.entries(occupations.major_categories)) {
+      const occs = allData.scores.scores.filter(s => s.major === code);
+      const filtered = search ? occs.filter(s => s.name.toLowerCase().includes(search) || name.includes(search)) : occs;
+      if (filtered.length === 0) continue;
+      const avgScore = Math.round(filtered.reduce((a, s) => a + s.score, 0) / filtered.length);
+      const emp = filtered.length;
+      children.push({ name: name, code, score: avgScore, value: emp, count: filtered.length });
+    }
+    return { name: "root", children };
+  }
+
+  if (level === "middle") {
+    const children = [];
+    for (const [code, name] of Object.entries(occupations.middle_categories)) {
+      const occs = allData.scores.scores.filter(s => s.middle === code);
+      const filtered = search ? occs.filter(s => s.name.toLowerCase().includes(search) || name.includes(search)) : occs;
+      if (filtered.length === 0) continue;
+      const avgScore = Math.round(filtered.reduce((a, s) => a + s.score, 0) / filtered.length);
+      children.push({ name: name.replace(/\s+/g, ''), code, score: avgScore, value: Math.max(filtered.length, 1), count: filtered.length });
+    }
+    return { name: "root", children };
+  }
+
+  // occupation level
+  const children = [];
+  for (const s of allData.scores.scores) {
+    if (search && !s.name.toLowerCase().includes(search)) continue;
+    children.push({ name: s.name, code: s.code, score: s.score, value: 1 });
+  }
+  return { name: "root", children };
+}
+
+function render() {
+  const container = document.getElementById("treemap");
+  container.innerHTML = "";
+  const level = document.getElementById("level").value;
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  const data = buildHierarchy(level);
+  if (data.children.length === 0) return;
+
+  const root = d3.hierarchy(data)
+    .sum(d => d.value || 0)
+    .sort((a, b) => (b.data.score || 0) - (a.data.score || 0));
+
+  d3.treemap()
+    .size([width, height])
+    .padding(1.5)
+    .round(true)(root);
+
+  const svg = d3.select(container)
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  const tooltip = document.getElementById("tooltip");
+
+  const nodes = svg.selectAll("g")
+    .data(root.leaves())
+    .join("g")
+    .attr("transform", d => `translate(${d.x0},${d.y0})`);
+
+  nodes.append("rect")
+    .attr("width", d => d.x1 - d.x0)
+    .attr("height", d => d.y1 - d.y0)
+    .attr("fill", d => scoreColor(d.data.score))
+    .attr("stroke", "#0a0a0a")
+    .attr("stroke-width", 0.5)
+    .attr("rx", 2)
+    .style("cursor", "pointer")
+    .on("mousemove", (event, d) => {
+      const w = d.x1 - d.x0;
+      const h = d.y1 - d.y0;
+      tooltip.style.display = "block";
+      tooltip.innerHTML = `
+        <div class="score" style="color:${scoreColor(d.data.score)}">${d.data.score}/10</div>
+        <div class="name">${d.data.name}</div>
+        <div class="cat">编码: ${d.data.code}</div>
+        ${d.data.count ? `<div class="emp">包含 ${d.data.count} 个职业</div>` : ''}
+      `;
+      let x = event.clientX + 15;
+      let y = event.clientY + 15;
+      if (x + 350 > window.innerWidth) x = event.clientX - 360;
+      if (y + 150 > window.innerHeight) y = event.clientY - 160;
+      tooltip.style.left = x + "px";
+      tooltip.style.top = y + "px";
+    })
+    .on("mouseleave", () => { tooltip.style.display = "none"; });
+
+  // Add text labels
+  nodes.each(function(d) {
+    const w = d.x1 - d.x0;
+    const h = d.y1 - d.y0;
+    const g = d3.select(this);
+
+    if (w > 35 && h > 18) {
+      // Score label
+      g.append("text")
+        .attr("x", 4)
+        .attr("y", 14)
+        .attr("fill", textColor(d.data.score))
+        .attr("font-size", Math.min(12, w / 4) + "px")
+        .attr("font-weight", "700")
+        .attr("opacity", 0.9)
+        .text(d.data.score);
+    }
+
+    if (w > 60 && h > 30) {
+      // Name label
+      const maxChars = Math.floor(w / 13);
+      let name = d.data.name;
+      if (name.length > maxChars) name = name.slice(0, maxChars) + "…";
+      g.append("text")
+        .attr("x", 4)
+        .attr("y", 28)
+        .attr("fill", textColor(d.data.score))
+        .attr("font-size", Math.min(11, w / 6) + "px")
+        .attr("opacity", 0.75)
+        .text(name);
+    }
+  });
+}
+
+document.getElementById("level").addEventListener("change", render);
+document.getElementById("search").addEventListener("input", debounce(render, 300));
+
+function debounce(fn, ms) {
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+window.addEventListener("resize", debounce(render, 200));
+
+loadData();
+</script>
+</body>
+</html>
