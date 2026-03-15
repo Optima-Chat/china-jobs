@@ -205,10 +205,21 @@ function render() {
 
   const tooltip = document.getElementById("tooltip");
 
+  // Define clip paths for each cell
+  const defs = svg.append("defs");
+  root.leaves().forEach((d, i) => {
+    defs.append("clipPath")
+      .attr("id", `clip-${i}`)
+      .append("rect")
+      .attr("width", d.x1 - d.x0)
+      .attr("height", d.y1 - d.y0);
+  });
+
   const nodes = svg.selectAll("g")
     .data(root.leaves())
     .join("g")
-    .attr("transform", d => `translate(${d.x0},${d.y0})`);
+    .attr("transform", d => `translate(${d.x0},${d.y0})`)
+    .attr("clip-path", (d, i) => `url(#clip-${i})`);
 
   nodes.append("rect")
     .attr("width", d => d.x1 - d.x0)
