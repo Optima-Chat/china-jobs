@@ -1,5 +1,12 @@
 # 谁会被 AI 取代？中国 1639 个职业全景分析
 
+[![GitHub Pages](https://img.shields.io/badge/demo-GitHub%20Pages-blue?logo=github)](https://optima-chat.github.io/china-jobs/)
+[![GitHub stars](https://img.shields.io/github/stars/Optima-Chat/china-jobs?style=social)](https://github.com/Optima-Chat/china-jobs)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Occupations](https://img.shields.io/badge/职业数-1639-orange)](data/occupations_raw.json)
+[![Average Score](https://img.shields.io/badge/平均分-4.1%2F10-yellow)](data/scores.json)
+[![Data Source](https://img.shields.io/badge/数据源-职业分类大典%202022-red)](data/职业分类大典_2022_分类体系表.pdf)
+
 **在线查看：https://optima-chat.github.io/china-jobs/**
 
 对中国《职业分类大典（2022年版）》中全部 1639 个职业进行 AI 替代可能性评分（0-10），并通过交互式 treemap 可视化呈现。
