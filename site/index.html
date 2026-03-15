@@ -257,18 +257,30 @@ function render() {
         .text(d.data.score);
     }
 
-    if (w > 60 && h > 30) {
-      // Name label
-      const maxChars = Math.floor(w / 13);
-      let name = d.data.name;
-      if (name.length > maxChars) name = name.slice(0, maxChars) + "…";
-      g.append("text")
-        .attr("x", 4)
-        .attr("y", 28)
-        .attr("fill", textColor(d.data.score))
-        .attr("font-size", Math.min(11, w / 6) + "px")
-        .attr("opacity", 0.75)
-        .text(name);
+    if (w > 40 && h > 28) {
+      // Name label with word wrap
+      const fontSize = Math.min(11, w / 6);
+      const charWidth = fontSize * 0.85; // approximate width per CJK char
+      const maxCharsPerLine = Math.max(2, Math.floor((w - 8) / charWidth));
+      const name = d.data.name;
+      const lines = [];
+      for (let i = 0; i < name.length; i += maxCharsPerLine) {
+        lines.push(name.slice(i, i + maxCharsPerLine));
+      }
+      // Only show lines that fit vertically
+      const lineHeight = fontSize + 2;
+      const maxLines = Math.floor((h - 20) / lineHeight);
+      const visibleLines = lines.slice(0, Math.max(1, maxLines));
+
+      visibleLines.forEach((line, i) => {
+        g.append("text")
+          .attr("x", 4)
+          .attr("y", 28 + i * lineHeight)
+          .attr("fill", textColor(d.data.score))
+          .attr("font-size", fontSize + "px")
+          .attr("opacity", 0.75)
+          .text(line);
+      });
     }
   });
 }
