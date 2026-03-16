@@ -215,88 +215,78 @@ function render() {
     .padding(1.5)
     .round(true)(root);
 
-  const svg = d3.select(container)
-    .append("svg")
-    .attr("width", width)
-    .attr("height", height);
-
   const tooltip = document.getElementById("tooltip");
 
-  // Define clip paths for each cell
-  const defs = svg.append("defs");
-  root.leaves().forEach((d, i) => {
-    defs.append("clipPath")
-      .attr("id", `clip-${i}`)
-      .append("rect")
-      .attr("width", d.x1 - d.x0)
-      .attr("height", d.y1 - d.y0);
-  });
+  // Use HTML divs instead of SVG for mobile compatibility
+  const wrapper = d3.select(container)
+    .append("div")
+    .style("position", "relative")
+    .style("width", width + "px")
+    .style("height", height + "px");
 
-  const nodes = svg.selectAll("g")
-    .data(root.leaves())
-    .join("g")
-    .attr("transform", d => `translate(${d.x0},${d.y0})`)
-    .attr("clip-path", (d, i) => `url(#clip-${i})`);
-
-  nodes.append("rect")
-    .attr("width", d => d.x1 - d.x0)
-    .attr("height", d => d.y1 - d.y0)
-    .attr("fill", d => scoreColor(d.data.score))
-    .attr("stroke", "#0a0a0a")
-    .attr("stroke-width", 0.5)
-    .attr("rx", 2)
-    .style("cursor", "pointer")
-    .on("mousemove", (event, d) => {
-      const w = d.x1 - d.x0;
-      const h = d.y1 - d.y0;
-      tooltip.style.display = "block";
-      const empStr = d.data.emp ? (d.data.emp >= 10000 ? (d.data.emp / 10000).toFixed(0) + ' 万人' : d.data.emp + ' 人') : '';
-      tooltip.innerHTML = `
-        <div class="score" style="color:${scoreColor(d.data.score)}">${d.data.score}/10</div>
-        <div class="name">${d.data.name}</div>
-        <div class="cat">编码: ${d.data.code}</div>
-        ${empStr ? `<div class="emp">就业人数: ~${empStr}</div>` : ''}
-        ${d.data.count ? `<div class="emp">包含 ${d.data.count} 个职业</div>` : ''}
-      `;
-      let x = event.clientX + 15;
-      let y = event.clientY + 15;
-      if (x + 350 > window.innerWidth) x = event.clientX - 360;
-      if (y + 150 > window.innerHeight) y = event.clientY - 160;
-      tooltip.style.left = x + "px";
-      tooltip.style.top = y + "px";
-    })
-    .on("mouseleave", () => { tooltip.style.display = "none"; });
-
-  // Add text labels
-  nodes.each(function(d) {
+  root.leaves().forEach(d => {
     const w = d.x1 - d.x0;
     const h = d.y1 - d.y0;
-    const g = d3.select(this);
+    const cell = wrapper.append("div")
+      .style("position", "absolute")
+      .style("left", d.x0 + "px")
+      .style("top", d.y0 + "px")
+      .style("width", w + "px")
+      .style("height", h + "px")
+      .style("background", scoreColor(d.data.score))
+      .style("border", "0.5px solid #0a0a0a")
+      .style("border-radius", "2px")
+      .style("overflow", "hidden")
+      .style("cursor", "pointer")
+      .style("padding", "2px 4px")
+      .style("color", textColor(d.data.score))
+      .on("mousemove", (event) => {
+        tooltip.style.display = "block";
+        const empStr = d.data.emp ? (d.data.emp >= 10000 ? (d.data.emp / 10000).toFixed(0) + ' 万人' : d.data.emp + ' 人') : '';
+        tooltip.innerHTML = `
+          <div class="score" style="color:${scoreColor(d.data.score)}">${d.data.score}/10</div>
+          <div class="name">${d.data.name}</div>
+          <div class="cat">编码: ${d.data.code}</div>
+          ${empStr ? `<div class="emp">就业人数: ~${empStr}</div>` : ''}
+          ${d.data.count ? `<div class="emp">包含 ${d.data.count} 个职业</div>` : ''}
+        `;
+        let x = event.clientX + 15;
+        let y = event.clientY + 15;
+        if (x + 350 > window.innerWidth) x = event.clientX - 360;
+        if (y + 150 > window.innerHeight) y = event.clientY - 160;
+        tooltip.style.left = x + "px";
+        tooltip.style.top = y + "px";
+      })
+      .on("mouseleave", () => { tooltip.style.display = "none"; })
+      .on("click", (event) => {
+        // Mobile: show tooltip on tap
+        tooltip.style.display = tooltip.style.display === "block" ? "none" : "block";
+        const empStr = d.data.emp ? (d.data.emp >= 10000 ? (d.data.emp / 10000).toFixed(0) + ' 万人' : d.data.emp + ' 人') : '';
+        tooltip.innerHTML = `
+          <div class="score" style="color:${scoreColor(d.data.score)}">${d.data.score}/10</div>
+          <div class="name">${d.data.name}</div>
+          <div class="cat">编码: ${d.data.code}</div>
+          ${empStr ? `<div class="emp">就业人数: ~${empStr}</div>` : ''}
+          ${d.data.count ? `<div class="emp">包含 ${d.data.count} 个职业</div>` : ''}
+        `;
+        tooltip.style.left = Math.min(event.clientX + 10, window.innerWidth - 300) + "px";
+        tooltip.style.top = Math.min(event.clientY + 10, window.innerHeight - 200) + "px";
+      });
 
-    if (w > 35 && h > 18) {
-      // Score label
-      g.append("text")
-        .attr("x", 4)
-        .attr("y", 14)
-        .attr("fill", textColor(d.data.score))
-        .attr("font-size", Math.min(12, w / 4) + "px")
-        .attr("font-weight", "700")
-        .attr("opacity", 0.9)
+    if (w > 30 && h > 16) {
+      cell.append("div")
+        .style("font-size", Math.min(12, w / 4) + "px")
+        .style("font-weight", "700")
+        .style("opacity", "0.9")
+        .style("line-height", "1.2")
         .text(d.data.score);
     }
 
     if (w > 40 && h > 28) {
-      // Name label with word wrap using foreignObject for proper text wrapping
-      g.append("foreignObject")
-        .attr("x", 3)
-        .attr("y", 16)
-        .attr("width", w - 6)
-        .attr("height", h - 18)
-        .append("xhtml:div")
-        .style("color", textColor(d.data.score))
+      cell.append("div")
         .style("font-size", Math.min(11, w / 7) + "px")
         .style("line-height", "1.3")
-        .style("opacity", 0.75)
+        .style("opacity", "0.75")
         .style("overflow", "hidden")
         .style("word-break", "break-all")
         .text(d.data.name);
