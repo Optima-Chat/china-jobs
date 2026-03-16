@@ -18,7 +18,6 @@ body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
 #stats { margin-left: auto; font-size: 12px; color: #888; white-space: nowrap; }
 #treemap { width: 100%; height: calc(100vh - 140px); }
 #tooltip { position: fixed; background: rgba(0,0,0,0.92); border: 1px solid #444; border-radius: 6px; padding: 12px 16px; font-size: 13px; display: none; z-index: 100; max-width: 350px; line-height: 1.6; }
-@media (hover: hover) { #tooltip { pointer-events: none; } }
 #tooltip .name { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
 #tooltip .score { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
 #tooltip .cat { color: #888; font-size: 12px; }
@@ -217,16 +216,13 @@ function render() {
     .round(true)(root);
 
   const tooltip = document.getElementById("tooltip");
-  const isMobile = 'ontouchstart' in window;
 
-  // Close tooltip when tapping outside on mobile
-  if (isMobile) {
-    document.addEventListener("click", (e) => {
-      if (!e.target.closest("#tooltip")) {
-        tooltip.style.display = "none";
-      }
-    });
-  }
+  // Close tooltip when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest("#tooltip")) {
+      tooltip.style.display = "none";
+    }
+  });
 
   function buildTooltipHTML(d) {
     const empStr = d.data.emp ? (d.data.emp >= 10000 ? (d.data.emp / 10000).toFixed(0) + ' 万人' : d.data.emp + ' 人') : '';
@@ -263,39 +259,19 @@ function render() {
       .style("padding", "2px 4px")
       .style("color", textColor(d.data.score));
 
-    if (!isMobile) {
-      // Desktop: hover tooltip
-      cell.on("mousemove", (event) => {
-        tooltip.style.display = "block";
-        tooltip.style.transform = "none";
-        tooltip.style.bottom = "auto";
-        tooltip.innerHTML = buildTooltipHTML(d);
-        let x = event.clientX + 15;
-        let y = event.clientY + 15;
-        if (x + 350 > window.innerWidth) x = event.clientX - 360;
-        if (y + 150 > window.innerHeight) y = event.clientY - 160;
-        tooltip.style.left = x + "px";
-        tooltip.style.top = y + "px";
-      })
-      .on("mouseleave", () => { tooltip.style.display = "none"; });
-    } else {
-      // Mobile: tap to show, tap outside to dismiss
-      cell.on("click", (event) => {
-        event.stopPropagation();
-        tooltip.innerHTML = buildTooltipHTML(d);
-        tooltip.style.display = "block";
-        tooltip.style.transform = "none";
-        tooltip.style.bottom = "auto";
-        const touch = event.changedTouches ? event.changedTouches[0] : event;
-        let x = touch.clientX + 10;
-        let y = touch.clientY - 120;
-        if (x + 300 > window.innerWidth) x = window.innerWidth - 310;
-        if (x < 10) x = 10;
-        if (y < 10) y = touch.clientY + 20;
-        tooltip.style.left = x + "px";
-        tooltip.style.top = y + "px";
-      });
-    }
+    cell.on("click", (event) => {
+      event.stopPropagation();
+      tooltip.innerHTML = buildTooltipHTML(d);
+      tooltip.style.display = "block";
+      let x = event.clientX + 15;
+      let y = event.clientY - 120;
+      if (x + 350 > window.innerWidth) x = event.clientX - 360;
+      if (x < 10) x = 10;
+      if (y < 10) y = event.clientY + 20;
+      if (y + 150 > window.innerHeight) y = event.clientY - 160;
+      tooltip.style.left = x + "px";
+      tooltip.style.top = y + "px";
+    });
 
     if (w > 30 && h > 16) {
       cell.append("div")
