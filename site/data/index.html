@@ -284,11 +284,16 @@ function render() {
         event.stopPropagation();
         tooltip.innerHTML = buildTooltipHTML(d);
         tooltip.style.display = "block";
-        // Position tooltip in center-bottom of screen on mobile
-        tooltip.style.left = "50%";
-        tooltip.style.top = "auto";
-        tooltip.style.bottom = "20px";
-        tooltip.style.transform = "translateX(-50%)";
+        tooltip.style.transform = "none";
+        tooltip.style.bottom = "auto";
+        const touch = event.changedTouches ? event.changedTouches[0] : event;
+        let x = touch.clientX + 10;
+        let y = touch.clientY - 120;
+        if (x + 300 > window.innerWidth) x = window.innerWidth - 310;
+        if (x < 10) x = 10;
+        if (y < 10) y = touch.clientY + 20;
+        tooltip.style.left = x + "px";
+        tooltip.style.top = y + "px";
       });
     }
 
