@@ -8,24 +8,41 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #0a0a0a; color: #e0e0e0; }
-#header { padding: 20px 30px; background: #111; border-bottom: 1px solid #222; }
-#header h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
-#header p { font-size: 13px; color: #888; }
-#controls { display: flex; gap: 12px; align-items: center; padding: 12px 30px; background: #111; border-bottom: 1px solid #222; flex-wrap: wrap; }
+#header { padding: 16px 20px; background: #111; border-bottom: 1px solid #222; }
+#header h1 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+#header p { font-size: 12px; color: #888; }
+#controls { display: flex; gap: 8px; align-items: center; padding: 8px 20px; background: #111; border-bottom: 1px solid #222; flex-wrap: wrap; }
 #controls label { font-size: 13px; color: #aaa; }
-#controls select, #controls input { background: #1a1a1a; border: 1px solid #333; color: #e0e0e0; padding: 6px 10px; border-radius: 4px; font-size: 13px; }
-#controls input[type="text"] { width: 200px; }
-#stats { margin-left: auto; font-size: 13px; color: #888; }
-#treemap { width: 100%; height: calc(100vh - 170px); margin-bottom: 40px; }
+#controls select, #controls input { background: #1a1a1a; border: 1px solid #333; color: #e0e0e0; padding: 5px 8px; border-radius: 4px; font-size: 13px; }
+#controls input[type="text"] { width: 160px; }
+#stats { margin-left: auto; font-size: 12px; color: #888; white-space: nowrap; }
+#treemap { width: 100%; height: calc(100vh - 140px); }
 #tooltip { position: fixed; background: rgba(0,0,0,0.92); border: 1px solid #444; border-radius: 6px; padding: 12px 16px; font-size: 13px; pointer-events: none; display: none; z-index: 100; max-width: 350px; line-height: 1.6; }
 #tooltip .name { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
 #tooltip .score { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
 #tooltip .cat { color: #888; font-size: 12px; }
 #tooltip .emp { color: #aaa; margin-top: 4px; }
-#legend { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.85); border: 1px solid #333; border-radius: 6px; padding: 12px 16px; font-size: 12px; z-index: 50; }
-#legend .title { font-weight: 600; margin-bottom: 8px; font-size: 13px; }
-#legend .bar { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
-#legend .swatch { width: 16px; height: 12px; border-radius: 2px; }
+#legend { position: fixed; bottom: 12px; right: 12px; background: rgba(0,0,0,0.85); border: 1px solid #333; border-radius: 6px; padding: 10px 14px; font-size: 12px; z-index: 50; }
+#legend .title { font-weight: 600; margin-bottom: 6px; font-size: 12px; }
+#legend .bar { display: flex; align-items: center; gap: 5px; margin-bottom: 2px; }
+#legend .swatch { width: 14px; height: 10px; border-radius: 2px; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  #header { padding: 10px 12px; }
+  #header h1 { font-size: 16px; }
+  #header p { font-size: 11px; }
+  #controls { padding: 6px 12px; gap: 6px; }
+  #controls label { font-size: 12px; }
+  #controls select, #controls input { padding: 4px 6px; font-size: 12px; }
+  #controls input[type="text"] { width: 100px; }
+  #stats { font-size: 11px; width: 100%; margin-left: 0; text-align: right; }
+  #treemap { height: calc(100vh - 120px); }
+  #legend { padding: 6px 10px; font-size: 10px; bottom: 8px; right: 8px; }
+  #legend .title { font-size: 10px; margin-bottom: 4px; }
+  #legend .bar { gap: 4px; margin-bottom: 1px; }
+  #legend .swatch { width: 12px; height: 8px; }
+}
 </style>
 </head>
 <body>
