@@ -217,12 +217,7 @@ function render() {
 
   const tooltip = document.getElementById("tooltip");
 
-  // Close tooltip when clicking outside
-  document.addEventListener("click", (e) => {
-    if (!e.target.closest("#tooltip")) {
-      tooltip.style.display = "none";
-    }
-  });
+  let activeCell = null;
 
   function buildTooltipHTML(d) {
     const empStr = d.data.emp ? (d.data.emp >= 10000 ? (d.data.emp / 10000).toFixed(0) + ' 万人' : d.data.emp + ' 人') : '';
@@ -261,6 +256,13 @@ function render() {
 
     cell.on("click", (event) => {
       event.stopPropagation();
+      const thisCell = cell.node();
+      if (activeCell === thisCell && tooltip.style.display === "block") {
+        tooltip.style.display = "none";
+        activeCell = null;
+        return;
+      }
+      activeCell = thisCell;
       tooltip.innerHTML = buildTooltipHTML(d);
       tooltip.style.display = "block";
       let x = event.clientX + 15;
