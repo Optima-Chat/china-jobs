@@ -15,7 +15,8 @@ concurrency:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    # tf#384：GitHub 托管 runner 2026-08-31 起被 Actions 预算卡死(job 不启动)，改走自家 CodeBuild runner(org 级 webhook，optima-terraform stacks/shared/073-codebuild-github-runner.tf)。
+    runs-on: codebuild-optima-runner-x86-${{ github.run_id }}-${{ github.run_attempt }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
